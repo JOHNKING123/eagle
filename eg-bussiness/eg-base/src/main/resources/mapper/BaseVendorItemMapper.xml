@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cc.msyt.eagle.base.dao.BaseVendorItemDao">
+<mapper namespace="cc.zhengcq.eagle.base.dao.BaseVendorItemDao">
 
 	<!-- 通用查询映射结果-->
-	<resultMap id="BaseResultMap" type="cc.msyt.eagle.base.model.BaseVendorItem">
+	<resultMap id="BaseResultMap" type="cc.zhengcq.eagle.base.model.BaseVendorItem">
 		<id column="idx" property="idx" />
 		<result column="vendor_idx" property="vendorIdx" />
 		<result column="item_idx" property="itemIdx" />

@@ -24,7 +24,7 @@ mybatis:
   mapper-locations: classpath:mapper/**/*.xml
 logging:
   level:
-    cc.msyt.eagle: debug
+    cc.zhengcq.eagle: debug
 
 spring:
 

@@ -22,7 +22,7 @@
         <root level="info">
             <appender-ref ref="console"/>
         </root>
-        <logger name="cc.msyt.eagle" additivity="false" level="debug">
+        <logger name="cc.zhengcq.eagle" additivity="false" level="debug">
             <appender-ref ref="console"/>
             <!--<appender-ref ref="logstash"/>-->
             <!--<appender-ref ref="socket"/>-->

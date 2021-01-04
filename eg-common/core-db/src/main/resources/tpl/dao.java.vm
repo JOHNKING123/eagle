@@ -1,6 +1,6 @@
 package ${package.Mapper};
 
-import cc.msyt.eagle.core.db.annotation.MyBatisDao;
+import cc.zhengcq.eagle.core.db.annotation.MyBatisDao;
 import ${package.Entity}.${entity};
 import ${superMapperClassPackage};
 

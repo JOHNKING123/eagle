@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cc.msyt.eagle.pur.dao.PurSubPoDao">
+<mapper namespace="cc.zhengcq.eagle.pur.dao.PurSubPoDao">
 
 	<!-- 通用查询映射结果-->
-	<resultMap id="BaseResultMap" type="cc.msyt.eagle.pur.model.PurSubPo">
+	<resultMap id="BaseResultMap" type="cc.zhengcq.eagle.pur.model.PurSubPo">
 		<id column="idx" property="idx" />
 		<result column="po_idx" property="poIdx" />
 		<result column="item_idx" property="itemIdx" />
