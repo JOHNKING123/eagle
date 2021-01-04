@@ -83,9 +83,10 @@ public class AuthorizationServerConfiguration extends AuthorizationServerConfigu
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 
-        endpoints.pathMapping("/oauth/authorize","/eg-uac/oauth/authorize")
-                . pathMapping("/oauth/token","/eg-uac/oauth/token");
+        endpoints.pathMapping("/oauth/authorize","/api/eg-uac/oauth/authorize")
+                . pathMapping("/oauth/token","/api/eg-uac/oauth/token");
         // 配置tokenStore,需要配置userDetailsService，否则refresh_token会报错
+        TokenStore tokenStore = tokenStore();
         endpoints.authenticationManager(authenticationManager).tokenStore(tokenStore()).tokenEnhancer(jwtTokenEnhancer()).userDetailsService(userDetailsService);
     }
 

@@ -16,7 +16,6 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 /**
  *  配置spring security
  * @author    zhengcq
- * @date 	    2019-07-12
  * @version   v1.0.0
  * @since     2019-07-12
  */
@@ -55,6 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/user/login", "/login", "/eg-uac/login", "/api/eg-uac/login").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable() //关闭CSRF

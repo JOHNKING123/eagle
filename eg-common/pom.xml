@@ -18,6 +18,7 @@
         <module>core-db</module>
         <module>core-server</module>
         <module>core-logging</module>
+        <module>core-auth</module>
     </modules>
 
 
