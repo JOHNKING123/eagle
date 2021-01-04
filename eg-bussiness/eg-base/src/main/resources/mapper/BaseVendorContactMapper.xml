@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.msyt.eagle.base.dao.BaseVendorContactDao">
+
+	<!-- 通用查询映射结果-->
+	<resultMap id="BaseResultMap" type="cc.msyt.eagle.base.model.BaseVendorContact">
+		<id column="idx" property="idx" />
+		<result column="vendor_id" property="vendorId" />
+		<result column="contact_name" property="contactName" />
+		<result column="mobile_phone" property="mobilePhone" />
+		<result column="email" property="email" />
+		<result column="version" property="version" />
+		<result column="status" property="status" />
+		<result column="create_time" property="createTime" />
+		<result column="create_by_member_idx" property="createByMemberIdx" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_by_member_idx" property="updateByMemberIdx" />
+		<result column="remark" property="remark" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+		idx,
+        vendor_id AS vendorId,
+        contact_name AS contactName,
+        mobile_phone AS mobilePhone,
+        email,
+		version,
+		status,
+		remark,
+		create_time AS createTime,
+		create_by_member_idx AS createByMemberIdx,
+		update_time AS updateTime,
+		update_by_member_idx AS updateByMemberIdx
+    </sql>
+
+
+	<select id="listByFilter" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_base_vendor_contact t
+		<include refid="listByFilterQuery" />
+	</select>
+	<sql id="listByFilterQuery">
+		where t.status = 1
+		<if test="param.vendorIdx != null and param.vendorIdx != 0">
+			and t.idx = #{param.vendorIdx}
+		</if>
+		<if test="param.contactName != null and param.contactName != ''">
+			and t.contact_name = #{param.contactName}
+		</if>
+		<if test="param.mobilePhone != null and param.mobilePhone != '' ">
+			and t.mobile_phone = #{param.mobilePhone}
+		</if>
+		<if test="param.email != null and param.email != ''">
+			and t.email = #{param.email}
+		</if>
+	</sql>
+</mapper>

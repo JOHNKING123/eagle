@@ -1,0 +1,29 @@
+spring:
+  application:
+    name: eg-monitor
+  cloud:
+    config:
+      uri: http://eg-config:8181
+      fail-fast: false
+      profile: ${config.profile:uat}
+
+  profiles:
+    active: ${config.profile:uat}
+
+
+turbine:
+  app-config: EG-BASE,EG-PUR
+  aggregator:
+    cluster-config: default
+  cluster-name-expression: new String("default")
+  combine-host-port: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: turbine.stream
+  metrics:
+    web:
+      server:
+        auto-time-requests: false

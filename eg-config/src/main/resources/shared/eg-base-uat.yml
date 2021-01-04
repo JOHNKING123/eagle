@@ -1,0 +1,15 @@
+server:
+  port: 8183
+
+#auth-server-url: http://eg-gateway:8887 # 授权服务地址
+#
+#security:
+#  oauth2:
+#    client:
+#      client-id: client1
+#      client-secret: 123456
+#      scope: all
+#      access-token-uri: ${auth-server-url}/oauth/token
+#      user-authorization-uri: ${auth-server-url}/oauth/authorize
+#    resource:
+#      token-info-uri: ${auth-server-url}/oauth/check_token #检查令牌

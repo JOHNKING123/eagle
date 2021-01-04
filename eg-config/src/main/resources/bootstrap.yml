@@ -1,0 +1,18 @@
+#https://cloud.spring.io/spring-cloud-config/single/spring-cloud-config.html#_git_ssh_configuration_using_properties
+
+spring:
+  application:
+    name: eg-config
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/shared
+  profiles:
+    active: ${config.profile:uat,native}
+
+server:
+  port: 8181
+
+
+

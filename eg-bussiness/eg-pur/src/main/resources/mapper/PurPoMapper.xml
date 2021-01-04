@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.msyt.eagle.pur.dao.PurPoDao">
+
+	<!-- 通用查询映射结果-->
+	<resultMap id="BaseResultMap" type="cc.msyt.eagle.pur.model.PurPo">
+		<id column="idx" property="idx" />
+		<result column="order_no" property="orderNo" />
+		<result column="num_of_sub_order" property="numOfSubOrder" />
+		<result column="num_of_pur_item" property="numOfPurItem" />
+		<result column="total_amt" property="totalAmt" />
+		<result column="biz_status" property="bizStatus" />
+		<result column="version" property="version" />
+		<result column="status" property="status" />
+		<result column="create_time" property="createTime" />
+		<result column="create_by_member_idx" property="createByMemberIdx" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_by_member_idx" property="updateByMemberIdx" />
+		<result column="remark" property="remark" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+		idx,
+        order_no AS orderNo,
+        num_of_sub_order AS numOfSubOrder,
+        num_of_pur_item AS numOfPurItem,
+        total_amt AS totalAmt,
+        biz_status AS bizStatus,
+		version,
+		status,
+		remark,
+		create_time AS createTime,
+		create_by_member_idx AS createByMemberIdx,
+		update_time AS updateTime,
+		update_by_member_idx AS updateByMemberIdx
+    </sql>
+
+
+	<select id="listByFilter" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_pur_po t
+		<include refid="listByFilterQuery" />
+	</select>
+	<sql id="listByFilterQuery">
+		where t.status = 1
+		<if test="param.poIdx != null and param.poIdx != 0">
+			and t.idx = #{param.poIdx}
+		</if>
+		<if test="param.startTime != null and param.startTime != ''">
+			and t.update_time >= #{param.startTime}
+		</if>
+		<if test="param.endTime != null and param.endTime != ''">
+			and t.update_time &lt; #{param.endTime}
+		</if>
+		<if test="param.bizStatus != null and param.bizStatus != 0">
+			and t.biz_status = #{param.bizStatus}
+		</if>
+	</sql>
+
+</mapper>

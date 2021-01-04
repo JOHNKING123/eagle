@@ -18,4 +18,15 @@ HELP.md
 target/
 *.settings/
 
+/log/
+/.idea/
+.idea/
 
+*.DS_Store
+*.iml
+*.project
+target/
+*.settings/
+.mvn/
+*.cmd
+mvnw

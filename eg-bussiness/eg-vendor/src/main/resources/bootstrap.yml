@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: eg-vendor
+  cloud:
+    config:
+      uri: http://eg-config:8181
+      fail-fast: false
+      profile: ${config.profile:uat}
+
+  profiles:
+    active: ${config.profile:uat}
+
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: hystrix.stream

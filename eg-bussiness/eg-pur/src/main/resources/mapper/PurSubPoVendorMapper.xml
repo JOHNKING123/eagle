@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.msyt.eagle.pur.dao.PurSubPoVendorDao">
+
+	<!-- 通用查询映射结果-->
+	<resultMap id="BaseResultMap" type="cc.msyt.eagle.pur.model.PurSubPoVendor">
+		<id column="idx" property="idx" />
+		<result column="pidx" property="pidx" />
+		<result column="po_idx" property="poIdx" />
+		<result column="sub_po_idx" property="subPoIdx" />
+		<result column="vendor_idx" property="vendorIdx" />
+		<result column="supply_price" property="supplyPrice" />
+		<result column="currency" property="currency" />
+		<result column="available_stock" property="availableStock" />
+		<result column="delivery_period" property="deliveryPeriod" />
+		<result column="ship_method" property="shipMethod" />
+		<result column="exchange_rate" property="exchangeRate" />
+		<result column="pur_price" property="purPrice" />
+		<result column="qty_of_pur" property="qtyOfPur" />
+		<result column="contact_idx" property="contactIdx" />
+		<result column="contact_name" property="contactName" />
+		<result column="contact_phone" property="contactPhone" />
+		<result column="contact_email" property="contactEmail" />
+		<result column="amt" property="amt" />
+		<result column="biz_status" property="bizStatus" />
+		<result column="version" property="version" />
+		<result column="status" property="status" />
+		<result column="create_time" property="createTime" />
+		<result column="create_by_member_idx" property="createByMemberIdx" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_by_member_idx" property="updateByMemberIdx" />
+		<result column="remark" property="remark" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+		idx,
+        pidx, po_idx AS poIdx,
+        sub_po_idx AS subPoIdx,
+        vendor_idx AS vendorIdx,
+        supply_price AS supplyPrice,
+        currency,
+        available_stock AS availableStock,
+        delivery_period AS deliveryPeriod,
+        ship_method AS shipMethod,
+        exchange_rate AS exchangeRate,
+        pur_price AS purPrice,
+        qty_of_pur AS qtyOfPur,
+        contact_idx AS contactIdx,
+        contact_name AS contactName,
+        contact_phone AS contactPhone,
+        contact_email AS contactEmail,
+        amt,
+        biz_status AS bizStatus,
+		version,
+		status,
+		remark,
+		create_time AS createTime,
+		create_by_member_idx AS createByMemberIdx,
+		update_time AS updateTime,
+		update_by_member_idx AS updateByMemberIdx
+    </sql>
+
+
+</mapper>

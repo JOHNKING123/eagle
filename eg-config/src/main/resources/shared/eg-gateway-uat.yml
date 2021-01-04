@@ -1,0 +1,47 @@
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 20000
+
+ribbon:
+  ReadTimeout: 20000
+  ConnectTimeout: 20000
+
+zuul:
+  retryable: false
+  ignoredServices: '*'
+  host:
+    connect-timeout-millis: 500
+    socket-timeout-millis: 20000
+
+  routes:
+    eg-base:
+      path: /api/eg-base/**
+      serviceId: eg-base
+      stripPrefix: false
+      sensitiveHeaders:
+    eg-pur:
+      path: /api/eg-pur/**
+      serviceId: eg-pur
+      stripPrefix: false
+      sensitiveHeaders:
+    eg-vendor:
+      path: /api/eg-vendor/**
+      serviceId: eg-vendor
+      stripPrefix: false
+      sensitiveHeaders:
+    eg-uac:
+      path: /api/eg-uac/**
+      serviceId: eg-uac
+      stripPrefix: false
+      sensitiveHeaders:
+
+server:
+  port: 8888
+
+zuulfilter:
+  accesslog: false
+  errorlog: true

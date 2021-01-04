@@ -1,0 +1,25 @@
+server:
+  port: 8887
+
+
+
+msyt:
+  security:
+      oauth2:
+        jwtSigningKey: msytqazxswedcvfr
+        tokenStore: jwt
+        clients[0]:
+          clientId: msyt-uac
+          clientSecret: uac123456
+          accessTokenValidateSeconds: 7200
+          scope: "*"
+        clients[1]:
+          clientId: msyt-browser
+          clientSecret: browser123456
+          accessTokenValidateSeconds: 7200
+          scope: "*"
+        clients[2]:
+          clientId: msyt-gateway
+          clientSecret: gateway123456
+          accessTokenValidateSeconds: 7200
+          scope: "*"

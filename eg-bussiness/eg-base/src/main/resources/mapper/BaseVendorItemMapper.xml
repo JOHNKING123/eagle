@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.msyt.eagle.base.dao.BaseVendorItemDao">
+
+	<!-- 通用查询映射结果-->
+	<resultMap id="BaseResultMap" type="cc.msyt.eagle.base.model.BaseVendorItem">
+		<id column="idx" property="idx" />
+		<result column="vendor_idx" property="vendorIdx" />
+		<result column="item_idx" property="itemIdx" />
+		<result column="item_code" property="itemCode" />
+		<result column="item_name" property="itemName" />
+		<result column="item_brand" property="itemBrand" />
+		<result column="item_desc" property="itemDesc" />
+		<result column="item_spec" property="itemSpec" />
+		<result column="item_origin" property="itemOrigin" />
+		<result column="item_barcode" property="itemBarcode" />
+		<result column="number_of_pieces" property="numberOfPieces" />
+		<result column="item_category" property="itemCategory" />
+		<result column="supply_price" property="supplyPrice" />
+		<result column="currency" property="currency" />
+		<result column="available_stock" property="availableStock" />
+		<result column="delivery_period" property="deliveryPeriod" />
+		<result column="ship_method" property="shipMethod" />
+		<result column="expiration_date" property="expirationDate" />
+		<result column="shelf_period" property="shelfPeriod" />
+
+		<result column="version" property="version" />
+		<result column="status" property="status" />
+		<result column="create_time" property="createTime" />
+		<result column="create_by_member_idx" property="createByMemberIdx" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_by_member_idx" property="updateByMemberIdx" />
+		<result column="remark" property="remark" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+		idx,
+        vendor_idx AS vendorIdx,
+        item_idx AS itemIdx,
+        item_code AS itemCode,
+        item_name AS itemName,
+        item_brand AS itemBrand,
+        item_desc AS itemDesc,
+        item_spec AS itemSpec,
+        item_origin AS itemOrigin,
+        item_barcode AS itemBarcode,
+        number_of_pieces AS numberOfPieces,
+        item_category AS itemCategory,
+        supply_price AS supplyPrice,
+        currency,
+        available_stock AS availableStock,
+        delivery_period AS deliveryPeriod,
+		ship_method	as shipMethod,
+		expiration_date	as expirationDate,
+		shelf_period	as shelfPeriod,
+		version,
+		status,
+		remark,
+		create_time AS createTime,
+		create_by_member_idx AS createByMemberIdx,
+		update_time AS updateTime,
+		update_by_member_idx AS updateByMemberIdx
+    </sql>
+
+	<select id="listByFilter" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from tb_base_vendor_item t
+		<include refid="listByFilterQuery" />
+	</select>
+	<sql id="listByFilterQuery">
+		where t.status = 1
+		<if test="param.vendorIdx != null and param.vendorIdx != 0">
+			and t.idx = #{param.vendorIdx}
+		</if>
+		<if test="param.itemIdx != null and param.itemIdx != 0">
+			and t.item_idx = #{param.itemIdx}
+		</if>
+		<if test="param.itemCode != null and param.itemCode != ''">
+			and t.item_code = #{param.itemCode}
+		</if>
+		<if test="param.itemName != null and param.itemName != '' ">
+			and t.item_name like concat(#{param.itemName},'%')
+		</if>
+		<if test="param.itemBrand != null and param.itemBrand != ''">
+			and t.item_brand = #{param.itemBrand}
+		</if>
+		<if test="param.itemCategory != null and param.itemCategory != 0">
+			and t.item_category like concat(#{param.itemCategory},'%')
+		</if>
+	</sql>
+
+</mapper>

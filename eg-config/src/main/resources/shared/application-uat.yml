@@ -1,0 +1,55 @@
+## 禁用重试调用功能
+## feign 是在ribbon 和 hystrix 基础上封装的，所以ribbon的超时也是feign 的超时
+timeout:
+  connect: 300
+  read: 12000
+
+ribbon:
+  ConnectTimeout: ${timeout.connect}
+  ReadTimeout: ${timeout.read}
+  OkToRetryOnAllOperations: false
+  MaxAutoRetries: 0
+  MaxAutoRetriesNextServer: 0
+  ServerListRefreshInterval: 1000
+
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: http://eg-discovery:8182/eureka/
+
+mybatis:
+  mapper-locations: classpath:mapper/**/*.xml
+logging:
+  level:
+    cc.msyt.eagle: debug
+
+spring:
+
+  datasource:
+      url: jdbc:mysql://172.16.50.242:15026/msyt_eagle?characterEncoding=utf8&allowMultiQueries=true
+      username: root
+      password: CQ09WRSBCV1G
+      driverClassName: org.mariadb.jdbc.Driver
+      type: com.alibaba.druid.pool.DruidDataSource
+      maxActive: 20
+      initialSize: 1
+      minIdle: 1
+      filters: stat,slf4j
+  zipkin:
+    base-url: http://EG-MONITOR:8885/ # 指定了Zipkin服务器的地址
+feign:
+  hystrix:
+    enabled: true
+
+
+sleuth:
+  web:
+    client:
+      enabled: true
+  sampler:
+    probability: 1.0 # 采用比例，默认 0.1 全部采样 1.0
+  zipkin:
+    base-url: http://EG-MONITOR:8885/ # 指定了Zipkin服务器的地址

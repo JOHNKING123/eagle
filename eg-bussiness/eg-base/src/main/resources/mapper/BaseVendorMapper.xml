@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.msyt.eagle.base.dao.BaseVendorDao">
+
+	<!-- 通用查询映射结果-->
+	<resultMap id="BaseResultMap" type="cc.msyt.eagle.base.model.BaseVendor">
+		<id column="idx" property="idx" />
+		<result column="vendor_name" property="vendorName" />
+		<result column="country" property="country" />
+		<result column="city" property="city" />
+		<result column="address" property="address" />
+		<result column="version" property="version" />
+		<result column="status" property="status" />
+		<result column="create_time" property="createTime" />
+		<result column="create_by_member_idx" property="createByMemberIdx" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_by_member_idx" property="updateByMemberIdx" />
+		<result column="remark" property="remark" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+		idx,
+        vendor_name AS vendorName,
+        country,
+        city,
+        address,
+		version,
+		status,
+		remark,
+		create_time AS createTime,
+		create_by_member_idx AS createByMemberIdx,
+		update_time AS updateTime,
+		update_by_member_idx AS updateByMemberIdx
+    </sql>
+
+	<select id="listByFilter" resultMap="BaseResultMap">
+		select
+			<include refid="Base_Column_List" />
+		from tb_base_vendor t
+		<include refid="listByFilterQuery" />
+	</select>
+	<sql id="listByFilterQuery">
+		where t.status = 1
+		<if test="param.vendorIdx != null and param.vendorIdx != 0">
+			and t.idx = #{param.vendorIdx}
+		</if>
+		<if test="param.vendorName != null and param.vendorName != ''">
+			and t.vendor_name = #{param.vendorName}
+		</if>
+		<if test="param.country != null and param.country != ''">
+			and t.country = #{param.country}
+		</if>
+		<if test="param.city != null and param.city != ''">
+			and t.city = #{param.city}
+		</if>
+
+		<if test="param.itemIdx != null and param.itemIdx != 0">
+			and exists (
+				select 1 from tb_base_vendor_item vendorItem
+				where vendorItem.status = 1 and vendorItem.vendor_idx = t.idx
+					  and vendorItem.item_idx = #{param.itemIdx}
+			)
+		</if>
+
+		<if test="param.ignoreVendorIdxs != null and param.ignoreVendorIdxs.size > 0">
+			and t.idx not in
+			<foreach collection="param.ignoreVendorIdxs" index="index" item="ignoreVendorIdx" open="(" separator="," close=")">
+				   #{ignoreVendorIdx}
+			</foreach>
+		</if>
+	</sql>
+
+</mapper>

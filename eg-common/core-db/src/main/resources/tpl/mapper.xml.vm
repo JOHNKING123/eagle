@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${package.Mapper}.${table.mapperName}">
+#if(${enableCache})
+	<!-- 开启二级缓存 ceshi -->
+	<cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
+#end
+
+#if(${baseResultMap})
+	<!-- 通用查询映射结果-->
+	<resultMap id="BaseResultMap" type="${package.Entity}.${entity}">
+		<id column="idx" property="idx" />
+#foreach($field in ${table.fields})
+#if(${field.keyFlag})##生成主键排在第一位
+		<id column="${field.name}" property="${field.propertyName}" />
+#end
+#end
+#foreach($field in ${table.fields})
+#if(!${field.keyFlag})##生成普通字段
+		<result column="${field.name}" property="${field.propertyName}" />
+#end
+#end
+		<result column="version" property="version" />
+		<result column="status" property="status" />
+		<result column="create_time" property="createTime" />
+		<result column="create_by_member_idx" property="createByMemberIdx" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_by_member_idx" property="updateByMemberIdx" />
+		<result column="remark" property="remark" />
+	</resultMap>
+#end
+
+#if(${baseColumnList})
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+		idx,
+        ${table.fieldNames},
+		version,
+		status,
+		remark,
+		create_time AS createTime,
+		create_by_member_idx AS createByMemberIdx,
+		update_time AS updateTime,
+		update_by_member_idx AS updateByMemberIdx
+    </sql>
+
+#end
+
+
+</mapper>

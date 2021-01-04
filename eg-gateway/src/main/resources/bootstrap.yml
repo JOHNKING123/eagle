@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: eg-gateway
+  cloud:
+    config:
+      uri: http://eg-config:8181
+      fail-fast: false
+      profile: ${config.profile:uat}
+
+  profiles:
+    active: ${config.profile:uat}
+
+

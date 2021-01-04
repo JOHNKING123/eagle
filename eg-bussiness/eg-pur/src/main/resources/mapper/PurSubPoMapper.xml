@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cc.msyt.eagle.pur.dao.PurSubPoDao">
+
+	<!-- 通用查询映射结果-->
+	<resultMap id="BaseResultMap" type="cc.msyt.eagle.pur.model.PurSubPo">
+		<id column="idx" property="idx" />
+		<result column="po_idx" property="poIdx" />
+		<result column="item_idx" property="itemIdx" />
+		<result column="item_code" property="itemCode" />
+		<result column="item_name" property="itemName" />
+		<result column="item_desc" property="itemDesc" />
+		<result column="item_brand" property="itemBrand" />
+		<result column="item_barcode" property="itemBarcode" />
+		<result column="item_spec" property="itemSpec" />
+		<result column="item_origin" property="itemOrigin" />
+		<result column="number_of_pieces" property="numberOfPieces" />
+		<result column="item_category" property="itemCategory" />
+		<result column="qty_of_require" property="qtyOfRequire" />
+		<result column="qty_of_need" property="qtyOfNeed" />
+		<result column="qty_of_purchase" property="qtyOfPurchase" />
+		<result column="num_of_vendor" property="numOfVendor" />
+		<result column="avg_pur_price" property="avgPurPrice" />
+		<result column="delivery_period" property="deliveryPeriod" />
+		<result column="sub_amt" property="subAmt" />
+		<result column="biz_status" property="bizStatus" />
+		<result column="version" property="version" />
+		<result column="status" property="status" />
+		<result column="create_time" property="createTime" />
+		<result column="create_by_member_idx" property="createByMemberIdx" />
+		<result column="update_time" property="updateTime" />
+		<result column="update_by_member_idx" property="updateByMemberIdx" />
+		<result column="remark" property="remark" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+		idx,
+        po_idx AS poIdx,
+        item_idx AS itemIdx,
+        item_code AS itemCode,
+        item_name AS itemName,
+        item_desc AS itemDesc,
+        item_brand AS itemBrand,
+        item_barcode AS itemBarcode,
+         item_spec AS itemSpec,
+        item_origin AS itemOrigin,
+        number_of_pieces AS numberOfPieces,
+        item_category AS itemCategory,
+        qty_of_require AS qtyOfRequire,
+        qty_of_need AS qtyOfNeed,
+        qty_of_purchase AS qtyOfPurchase,
+         num_of_vendor AS numOfVendor,
+         avg_pur_price AS avgPurPrice,
+         delivery_period AS deliveryPeriod,
+         sub_amt	as subAmt,
+         biz_status AS bizStatus,
+		version,
+		status,
+		remark,
+		create_time AS createTime,
+		create_by_member_idx AS createByMemberIdx,
+		update_time AS updateTime,
+		update_by_member_idx AS updateByMemberIdx
+    </sql>
+
+
+
+</mapper>
