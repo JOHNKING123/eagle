@@ -30,6 +30,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                         "/eg-uac/oauth/token",
                         "/api/eg-uac/oauth/authorize",
                         "/api/eg-uac/oauth/token",
+                        "/api/eg-uac/login",
                         "/webjars/**",
                         "/resources/**",
                         "/swagger-ui.html",
