@@ -13,8 +13,8 @@ import cc.zhengcq.eagle.pur.model.PurSubPoVendor;
 import cc.zhengcq.eagle.pur.param.ParamPushSubPoVendor;
 import cc.zhengcq.eagle.vendor.model.VendorPo;
 import cc.zhengcq.eagle.vendor.model.VendorPoLine;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -169,9 +169,9 @@ public class PurSubPoService extends BaseServiceImpl<PurSubPoDao, PurSubPo> {
 
         this.purSubPoVendorService.deleteByPoIdx(poIdx);
 
-        Wrapper<PurSubPo> wrapper = new EntityWrapper<>();
+        QueryWrapper<PurSubPo> wrapper = new QueryWrapper<>();
         wrapper.eq("poIdx",poIdx);
-        this.baseDao.delete(wrapper);
+        this.baseMapper.delete(wrapper);
     }
 
     @Transactional
@@ -186,23 +186,23 @@ public class PurSubPoService extends BaseServiceImpl<PurSubPoDao, PurSubPo> {
         if(StringUtils.isZero(poIdx)) {
             return Collections.EMPTY_LIST;
         }
-        Wrapper<PurSubPo> wrapper = new EntityWrapper<>();
+        QueryWrapper<PurSubPo> wrapper = new QueryWrapper<>();
         wrapper.eq("status", EStatus.E_VALID.getCode());
         wrapper.eq("po_idx",poIdx);
 
-        return baseDao.selectList(wrapper);
+        return baseMapper.selectList(wrapper);
     }
 
     public PurSubPo getByPoIdxAndItemIdx(Long poIdx,Long itemIdx){
         if(StringUtils.isZero(poIdx) || StringUtils.isZero(itemIdx)) {
             return null;
         }
-        Wrapper<PurSubPo> wrapper = new EntityWrapper<>();
+        QueryWrapper<PurSubPo> wrapper = new QueryWrapper<>();
         wrapper.eq("status", EStatus.E_VALID.getCode());
         wrapper.eq("po_idx",poIdx);
         wrapper.eq("item_idx",itemIdx);
 
-       List<PurSubPo> ls = baseDao.selectList(wrapper);
+       List<PurSubPo> ls = baseMapper.selectList(wrapper);
        if(ls != null && !ls.isEmpty()){
            return ls.get(0);
        }
@@ -213,12 +213,12 @@ public class PurSubPoService extends BaseServiceImpl<PurSubPoDao, PurSubPo> {
         if(StringUtils.isZero(poIdx) || itemIdxs == null || itemIdxs.isEmpty()){
             return Collections.EMPTY_LIST;
         }
-        Wrapper<PurSubPo> wrapper = new EntityWrapper<>();
+        QueryWrapper<PurSubPo> wrapper = new QueryWrapper<>();
         wrapper.eq("status", EStatus.E_VALID.getCode());
         wrapper.eq("po_idx",poIdx);
         wrapper.in("item_idx",itemIdxs);
 
-        List<PurSubPo> ls = baseDao.selectList(wrapper);
+        List<PurSubPo> ls = baseMapper.selectList(wrapper);
 
         return ls;
     }

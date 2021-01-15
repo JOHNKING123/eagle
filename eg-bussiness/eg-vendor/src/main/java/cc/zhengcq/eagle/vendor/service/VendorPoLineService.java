@@ -9,8 +9,8 @@ import cc.zhengcq.eagle.vendor.model.VendorPo;
 import cc.zhengcq.eagle.vendor.model.VendorPoLine;
 import cc.zhengcq.eagle.vendor.dao.VendorPoLineDao;
 import cc.zhengcq.eagle.core.db.base.BaseServiceImpl;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -51,11 +51,11 @@ public class VendorPoLineService extends BaseServiceImpl<VendorPoLineDao, Vendor
         if(StringUtils.isZero(poIdx)){
             return Collections.EMPTY_LIST;
         }
-        Wrapper<VendorPoLine> wrapper = new EntityWrapper<>();
+        QueryWrapper<VendorPoLine> wrapper = new QueryWrapper<>();
         wrapper.eq("status", EStatus.E_VALID.getCode());
         wrapper.eq("po_idx",poIdx);
 
-        return baseDao.selectList(wrapper);
+        return baseMapper.selectList(wrapper);
     }
 
 

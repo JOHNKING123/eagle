@@ -1,18 +1,17 @@
 package cc.zhengcq.eagle.core.db.base;
 
+
 import cc.zhengcq.eagle.core.db.entity.Page;
-import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 
 import java.io.Serializable;
 import java.util.List;
 
-//import com.baomidou.mybatisplus.plugins.Page;
-
 /**
- * Created by zhengcq
+ * Created by zhengcq （ 泛型：T 是实体 ）
+ * @param <T> 实体
  */
 public interface BaseService<T> {
-
     /**
      * <p>
      * 插入一条记录
@@ -48,6 +47,14 @@ public interface BaseService<T> {
      * @return boolean
      */
     boolean updateById(T entity);
+
+    /**
+     * 根据 whereEntity 条件，更新记录
+     * @param entity entity
+     * @param wrapper wrapper
+     * @return
+     */
+    boolean update(T entity, Wrapper<T> wrapper);
 
 
     /**
@@ -134,5 +141,4 @@ public interface BaseService<T> {
      * @return
      */
     Page<T> selectPage(Page<T> page, Wrapper<T> wrapper);
-
 }

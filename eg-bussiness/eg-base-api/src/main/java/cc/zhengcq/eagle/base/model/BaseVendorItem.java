@@ -3,8 +3,8 @@ package cc.zhengcq.eagle.base.model;
 import cc.zhengcq.eagle.core.db.json.CurrencyDeserializer;
 import cc.zhengcq.eagle.core.db.json.CurrencySerializer;
 import cc.zhengcq.eagle.core.db.json.IdWorkerDeserializer;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import cc.zhengcq.eagle.core.db.base.BaseModel;
 
 import java.util.Date;
