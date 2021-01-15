@@ -1,8 +1,5 @@
 package ${package.Entity};
 
-#if(${activeRecord})
-import com.baomidou.mybatisplus.activerecord.Model;
-#end
 #foreach($pkg in ${table.importPackages})
 import ${pkg};
 #end
@@ -24,11 +21,7 @@ import lombok.Data;
 #if(${superEntityClass})
 public class ${entity} extends ${superEntityClass} {
 #else
-#if(${activeRecord})
-public class ${entity} extends Model<${entity}> {
-#else
 public class ${entity} implements Serializable {
-#end
 #end
 
 #foreach($field in ${table.fields})
@@ -50,16 +43,5 @@ public class ${entity} implements Serializable {
 	public static final String ${field.name.toUpperCase()} = "${field.name}";
 
 #end
-#end
-#if(${activeRecord})
-	@Override
-	protected Serializable pkVal() {
-#if(${keyPropertyName})
-		return this.${keyPropertyName};
-#else
-		return getId();
-#end
-	}
-
 #end
 }

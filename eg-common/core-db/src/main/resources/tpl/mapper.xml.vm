@@ -38,10 +38,10 @@
 		version,
 		status,
 		remark,
-		create_time AS createTime,
-		create_by_member_idx AS createByMemberIdx,
-		update_time AS updateTime,
-		update_by_member_idx AS updateByMemberIdx
+		create_time,
+		create_by_member_idx,
+		update_time,
+		update_by_member_idx
     </sql>
 
 #end

@@ -17,7 +17,7 @@ import java.util.Map;
  * 
  */
 @MyBatisDao
-public interface BaseDao<T extends BaseModel> extends com.baomidou.mybatisplus.mapper.BaseMapper<T> {
+public interface BaseDao<T extends BaseModel> extends com.baomidou.mybatisplus.core.mapper.BaseMapper<T> {
 
 	List<Long> selectIdPage(@Param("cm") Map<String, Object> params);
 

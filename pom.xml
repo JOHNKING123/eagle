@@ -11,11 +11,11 @@
     <modules>
         <module>eg-common</module>
         <module>eg-parent</module>
-        <module>eg-gateway</module>
         <module>eg-config</module>
         <module>eg-discovery</module>
-        <module>eg-bussiness</module>
         <module>eg-monitor</module>
+        <module>eg-gateway</module>
+        <module>eg-bussiness</module>
         <module>eg-uac</module>
     </modules>
 

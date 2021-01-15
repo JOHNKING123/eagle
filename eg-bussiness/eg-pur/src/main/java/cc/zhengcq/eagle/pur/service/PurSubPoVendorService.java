@@ -12,8 +12,8 @@ import cc.zhengcq.eagle.pur.dao.PurSubPoVendorDao;
 import cc.zhengcq.eagle.core.db.base.BaseServiceImpl;
 import cc.zhengcq.eagle.pur.param.ParamRevVendorItemChg;
 import cc.zhengcq.eagle.pur.param.ParamRevVendorItemConfirm;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,31 +39,31 @@ public class PurSubPoVendorService extends BaseServiceImpl<PurSubPoVendorDao, Pu
     private PurPoService purPoService;
 
     public void deleteByPoIdx(Long poIdx){
-        Wrapper<PurSubPoVendor> wrapper = new EntityWrapper<>();
+        QueryWrapper<PurSubPoVendor> wrapper = new QueryWrapper<>();
         wrapper.eq("po_idx",poIdx);
-        baseDao.delete(wrapper);
+        baseMapper.delete(wrapper);
     }
 
     public void deleteBySubPoIdx(Long subPoIdx){
-        Wrapper<PurSubPoVendor> wrapper = new EntityWrapper<>();
+        QueryWrapper<PurSubPoVendor> wrapper = new QueryWrapper<>();
         wrapper.eq("sub_po_idx",subPoIdx);
-        baseDao.delete(wrapper);
+        baseMapper.delete(wrapper);
     }
     public void deleteByPidx(Long pidx){
-        Wrapper<PurSubPoVendor> wrapper = new EntityWrapper<>();
+        QueryWrapper<PurSubPoVendor> wrapper = new QueryWrapper<>();
         wrapper.eq("pidx",pidx);
-        baseDao.delete(wrapper);
+        baseMapper.delete(wrapper);
     }
 
     public PurSubPoVendor getChangeRecord(Long pidx){
         if(StringUtils.isZero(pidx)){
             return null;
         }
-        Wrapper<PurSubPoVendor> wrapper = new EntityWrapper<>();
+        QueryWrapper<PurSubPoVendor> wrapper = new QueryWrapper<>();
         wrapper.eq("pidx",pidx);
         wrapper.eq("status",EStatus.E_NOT_ACTIVE.getCode());
 
-        List<PurSubPoVendor> ls = baseDao.selectList(wrapper);
+        List<PurSubPoVendor> ls = baseMapper.selectList(wrapper);
         if(ls != null && !ls.isEmpty()){
             return ls.get(0);
         }
@@ -74,33 +74,33 @@ public class PurSubPoVendorService extends BaseServiceImpl<PurSubPoVendorDao, Pu
         if(StringUtils.isZero(poIdx)) {
             return Collections.EMPTY_LIST;
         }
-        Wrapper<PurSubPoVendor> wrapper = new EntityWrapper<>();
+        QueryWrapper<PurSubPoVendor> wrapper = new QueryWrapper<>();
         wrapper.eq("status", EStatus.E_VALID.getCode());
         wrapper.eq("po_idx",poIdx);
 
-        return baseDao.selectList(wrapper);
+        return baseMapper.selectList(wrapper);
     }
     public List<PurSubPoVendor>  getBySubPoIdx(Long subPoIdx){
         if(StringUtils.isZero(subPoIdx)) {
             return Collections.EMPTY_LIST;
         }
-        Wrapper<PurSubPoVendor> wrapper = new EntityWrapper<>();
+        QueryWrapper<PurSubPoVendor> wrapper = new QueryWrapper<>();
         wrapper.eq("status", EStatus.E_VALID.getCode());
         wrapper.eq("sub_po_idx",subPoIdx);
 
-        return baseDao.selectList(wrapper);
+        return baseMapper.selectList(wrapper);
     }
 
     public PurSubPoVendor getBySubPoIdxAndVendorIdx(Long subPoIdx,Long vendorIdx){
         if(StringUtils.isZero(subPoIdx) || StringUtils.isZero(vendorIdx)) {
             return null;
         }
-        Wrapper<PurSubPoVendor> wrapper = new EntityWrapper<>();
+        QueryWrapper<PurSubPoVendor> wrapper = new QueryWrapper<>();
         wrapper.eq("status", EStatus.E_VALID.getCode());
         wrapper.eq("sub_po_idx",subPoIdx);
         wrapper.eq("vendor_idx",vendorIdx);
 
-        List<PurSubPoVendor> ls = baseDao.selectList(wrapper);
+        List<PurSubPoVendor> ls = baseMapper.selectList(wrapper);
         if(ls != null && !ls.isEmpty()){
             return ls.get(0);
         }
@@ -112,12 +112,12 @@ public class PurSubPoVendorService extends BaseServiceImpl<PurSubPoVendorDao, Pu
         if(StringUtils.isZero(subPoIdx) || vendorIdxs == null || vendorIdxs.isEmpty()) {
             return Collections.EMPTY_LIST;
         }
-        Wrapper<PurSubPoVendor> wrapper = new EntityWrapper<>();
+        QueryWrapper<PurSubPoVendor> wrapper = new QueryWrapper<>();
         wrapper.eq("status", EStatus.E_VALID.getCode());
         wrapper.eq("sub_po_idx",subPoIdx);
         wrapper.in("vendor_idx",vendorIdxs);
 
-        List<PurSubPoVendor> ls = baseDao.selectList(wrapper);
+        List<PurSubPoVendor> ls = baseMapper.selectList(wrapper);
 
         return ls;
     }

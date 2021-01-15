@@ -1,12 +1,13 @@
 package cc.zhengcq.eagle.core.db.base;
 
 import cc.zhengcq.eagle.core.db.entity.Page;
-import com.baomidou.mybatisplus.entity.TableInfo;
-import com.baomidou.mybatisplus.enums.SqlMethod;
-import com.baomidou.mybatisplus.exceptions.MybatisPlusException;
-import com.baomidou.mybatisplus.mapper.SqlHelper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
-import com.baomidou.mybatisplus.toolkit.*;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.metadata.*;
+import com.baomidou.mybatisplus.core.enums.SqlMethod;
+import com.baomidou.mybatisplus.core.exceptions.MybatisPlusException;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.baomidou.mybatisplus.extension.toolkit.*;
+import com.baomidou.mybatisplus.core.toolkit.*;
 import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,52 +19,16 @@ import java.util.List;
 
 /**
  * Created by zhengcq
+ * @param <T> 实体
+ * @param <M> dao 操作类
  */
-public class BaseServiceImpl<M extends BaseDao<T>, T extends BaseModel> implements BaseService<T> {
+public class BaseServiceImpl<M extends BaseDao<T>, T extends BaseModel> extends ServiceImpl<M, T> implements BaseService<T> {
+
+    /**
+     * 日志对象
+     */
     protected static final Logger logger   = LoggerFactory.getLogger(BaseServiceImpl.class);
 
-    @Autowired
-    protected M baseDao;
-
-    @SuppressWarnings("unchecked")
-    protected Class<T> currentModleClass() {
-        return ReflectionKit.getSuperClassGenricType(getClass(), 1);
-    }
-
-    /**
-     * <p>
-     * 批量操作 SqlSession
-     * </p>
-     */
-    protected SqlSession sqlSessionBatch() {
-        return SqlHelper.sqlSessionBatch(currentModleClass());
-    }
-
-    /**
-     * 获取SqlStatement
-     *
-     * @param sqlMethod
-     * @return
-     */
-    protected String sqlStatement(SqlMethod sqlMethod) {
-        return SqlHelper.table(currentModleClass()).getSqlStatement(sqlMethod.getMethod());
-    }
-
-    /**
-     * <p>
-     * 判断数据库操作是否成功
-     * </p>
-     * <p>
-     * 注意！！ 该方法为 Integer 判断，不可传入 int 基本类型
-     * </p>
-     *
-     * @param result
-     *            数据库操作返回影响条数
-     * @return boolean
-     */
-    protected static boolean retBool(Integer result) {
-        return SqlHelper.retBool(result);
-    }
 
     /**
      * <p>
@@ -74,86 +39,122 @@ public class BaseServiceImpl<M extends BaseDao<T>, T extends BaseModel> implemen
      *            实体对象
      * @return boolean
      */
+    @Override
     public boolean insertOrUpdate(T entity) {
-        entity.preUpdate();
-        if (null != entity) {
-            Class<?> cls = entity.getClass();
-            TableInfo tableInfo = TableInfoHelper.getTableInfo(cls);
-            if (null != tableInfo && StringUtils.isNotEmpty(tableInfo.getKeyProperty())) {
-                Object idVal = ReflectionKit.getMethodValue(cls, entity, tableInfo.getKeyProperty());
-                if (StringUtils.checkValNull(idVal)) {
-                    return insert(entity);
-                } else {
-					/*
-					 * 更新成功直接返回，失败执行插入逻辑
-					 */
-                    boolean rlt = updateById(entity);
-                    if (!rlt) {
-                        return insert(entity);
-                    }
-                    return rlt;
-                }
-            } else {
-                throw new MybatisPlusException("Error:  Can not execute. Could not find @TableId.");
-            }
-        }
-        return false;
+        return this.saveOrUpdate(entity);
     }
 
+    /**
+     * 插入数据
+     * @param entity
+     *            实体对象
+     * @return
+     */
+    @Override
     public boolean insert(T entity) {
         entity.preInsert();
-        return retBool(baseDao.insert(entity));
+        return retBool(baseMapper.insert(entity));
     }
 
 
-
+    /**
+     * 根据主键id 删除
+     * @param id
+     *            主键ID
+     * @return 结果
+     */
+    @Override
     public boolean deleteById(Serializable id) {
-        return retBool(baseDao.deleteById(id));
+        return retBool(baseMapper.deleteById(id));
     }
 
-
+    /**
+     * 根据主键跟新对象
+     * @param entity
+     *            实体对象
+     * @return 结果
+     */
+    @Override
     public boolean updateById(T entity) {
         entity.preUpdate();
-        return retBool(baseDao.updateById(entity));
+        return retBool(baseMapper.updateById(entity));
     }
 
+    /**
+     * 根据 whereEntity 条件，更新记录
+     * @param entity entity
+     * @param wrapper wrapper
+     * @return
+     */
+    @Override
     public boolean update(T entity, Wrapper<T> wrapper) {
         entity.preUpdate();
-        return retBool(baseDao.update(entity, wrapper));
+        return retBool(baseMapper.update(entity, wrapper));
     }
 
 
-
+    /**
+     * 根据主键返回记录
+     * @param id
+     *            主键ID
+     * @return 结果
+     */
+    @Override
     public T selectById(Serializable id) {
-        return baseDao.selectById(id);
+        return baseMapper.selectById(id);
     }
 
-
+    /**
+     * 根据条件返回一条记录
+     * @param wrapper wrapper
+     * @return 结果
+     */
+    @Override
     public T selectOne(Wrapper<T> wrapper) {
-        return SqlHelper.getObject(baseDao.selectList(wrapper));
+        return this.baseMapper.selectOne(wrapper);
     }
 
 
-
+    /**
+     * 根据条件返回记录数
+     * @param wrapper wrapper
+     * @return 结果
+     */
+    @Override
     public int selectCount(Wrapper<T> wrapper) {
-        return SqlHelper.retCount(baseDao.selectCount(wrapper));
+       return this.baseMapper.selectCount(wrapper);
     }
 
+    /**
+     * 根据条件返回记录列表
+     * @param wrapper wrapper
+     * @return 结果
+     */
+    @Override
     public List<T> selectList(Wrapper<T> wrapper) {
-        return baseDao.selectList(wrapper);
+        return baseMapper.selectList(wrapper);
     }
 
+    /**
+     * 分页获取记录
+     * @param page page
+     * @return 结果
+     */
+    @Override
     public Page<T> selectPage(Page<T> page) {
-        page.setRecords(baseDao.selectPage(page, null));
-        return page;
+       return baseMapper.selectPage(page, null);
     }
 
 
+    /**
+     * 根据条件分页获取记录
+     * @param page page
+     * @param wrapper wrapper
+     * @return 结果
+     */
+    @Override
     public Page<T> selectPage(Page<T> page, Wrapper<T> wrapper) {
-        SqlHelper.fillWrapper(page, wrapper);
-        page.setRecords(baseDao.selectPage(page, wrapper));
-        return page;
+       return baseMapper.selectPage(page, wrapper);
     }
-
 
 }
