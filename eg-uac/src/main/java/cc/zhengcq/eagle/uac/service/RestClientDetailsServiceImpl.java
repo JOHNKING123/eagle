@@ -39,9 +39,11 @@ public class RestClientDetailsServiceImpl implements ClientDetailsService {
 		for (OAuth2ClientProperties client : oAuth2Properties.getClients()) {
 			builder.withClient(client.getClientId())
 					.secret(bCryptPasswordEncoder.encode(client.getClientSecret()))
-					.authorizedGrantTypes("refresh_token", "password", "client_credentials")
+					.autoApprove(true)
+					.authorizedGrantTypes("refresh_token", "password", "client_credentials", "authorization_code")
 					.accessTokenValiditySeconds(client.getAccessTokenValidateSeconds())
 					.refreshTokenValiditySeconds(client.getRefreshTokenValiditySeconds())
+					.redirectUris("http://baidu.com")
 					.scopes(client.getScope());
 		}
 		try {
