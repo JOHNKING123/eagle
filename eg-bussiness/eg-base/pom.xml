@@ -34,6 +34,11 @@
         </dependency>
         <dependency>
             <groupId>cc.zhengcq.eagle</groupId>
+            <artifactId>core-mq</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>cc.zhengcq.eagle</groupId>
             <artifactId>eg-base-api</artifactId>
             <version>${project.parent.version}</version>
         </dependency>

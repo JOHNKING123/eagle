@@ -10,6 +10,7 @@ import cc.zhengcq.eagle.core.db.entity.PageParam;
 import cc.zhengcq.eagle.core.server.base.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,9 @@ public class BaseVendorController extends BaseController implements IBaseVendorS
 
     @Autowired
     private BaseVendorService baseVendorService;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     /**
      * 保存供应商信息
@@ -60,7 +64,7 @@ public class BaseVendorController extends BaseController implements IBaseVendorS
     public JsonResult<BaseVendor>  getById(@RequestParam("vendorId")Long vendorId) {
 
         BaseVendor baseVendor = baseVendorService.selectById(vendorId);
-
+        rabbitTemplate.convertAndSend("amq.fanout", "", "123123");
         return JsonResult.ok(baseVendor);
     }
 

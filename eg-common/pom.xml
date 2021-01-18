@@ -19,6 +19,7 @@
         <module>core-db</module>
         <module>core-server</module>
         <module>core-auth</module>
+        <module>core-mq</module>
     </modules>
 
 
