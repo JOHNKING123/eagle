@@ -9,6 +9,8 @@ import java.util.List;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.ToString;
+
 /**
  * <p>
  * 供应商
@@ -19,6 +21,7 @@ import lombok.Data;
  */
 @TableName("tb_base_vendor")
 @Data
+@ToString
 public class BaseVendor extends BaseModel {
 
 	/**

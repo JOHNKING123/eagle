@@ -7,11 +7,13 @@ import cc.zhengcq.eagle.base.service.BaseVendorService;
 import cc.zhengcq.eagle.core.common.entity.JsonResult;
 import cc.zhengcq.eagle.core.db.entity.Page;
 import cc.zhengcq.eagle.core.db.entity.PageParam;
+import cc.zhengcq.eagle.core.mq.config.KafkaConfig;
 import cc.zhengcq.eagle.core.server.base.BaseController;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,6 +37,12 @@ public class BaseVendorController extends BaseController implements IBaseVendorS
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @Autowired
+    private KafkaTemplate<String, Object> kafkaTemplate;
+
+    @Autowired
+    private KafkaConfig kafkaConfig;
+
     /**
      * 保存供应商信息
      * @param userIdx  操作用户Id
@@ -47,7 +55,7 @@ public class BaseVendorController extends BaseController implements IBaseVendorS
     public JsonResult  saveVendor(@RequestParam("userIdx")Long userIdx,
                                   @RequestBody BaseVendor baseVendor) {
 
-        baseVendorService.saveVendor(userIdx,baseVendor);
+        baseVendorService.saveVendor(userIdx, baseVendor);
 
         return JsonResult.ok(baseVendor.getIdx_());
     }
@@ -65,6 +73,7 @@ public class BaseVendorController extends BaseController implements IBaseVendorS
 
         BaseVendor baseVendor = baseVendorService.selectById(vendorId);
         rabbitTemplate.convertAndSend("amq.fanout", "", "123123");
+        kafkaTemplate.send("my-topic", baseVendor);
         return JsonResult.ok(baseVendor);
     }
 
