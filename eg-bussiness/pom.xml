@@ -21,5 +21,7 @@
         <module>eg-base</module>
         <module>eg-vendor</module>
         <module>eg-vendor-api</module>
+        <module>eg-reactor</module>
+        <module>eg-reactor-api</module>
     </modules>
 </project>

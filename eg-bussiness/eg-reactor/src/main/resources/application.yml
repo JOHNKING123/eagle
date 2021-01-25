@@ -1,0 +1,6 @@
+server:
+  port: 8186
+spring:
+  application:
+    name: eg-reactor
+

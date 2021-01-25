@@ -20,10 +20,14 @@ import org.springframework.stereotype.Component;
 public class TestListener {
 
     @RabbitListener(queuesToDeclare = @Queue(value = "topic.zcqtest"))
-    public void onMessage(String data) {
-        System.out.println("consumerExistsQueue: " + data);
+    public void onMessage(Message message, Channel channel) {
+        System.out.println(String.format("consumerExistsQueue: %s, getFrom:%s", message.getBody(), channel.getConnection().getAddress()));
     }
 
+    @RabbitListener(queuesToDeclare = @Queue(value = "testMq1"))
+    public void onMessage1(Message message, Channel channel) {
+        System.out.println(String.format("onMessage1: %s, getFrom:%s", message.getBody(), channel.getConnection().getAddress()));
+    }
 //    @RabbitListener(queues = "fanous.zcqtest")
 //    public void onFanousMessage(String data) {
 //        System.out.println("fanous.zcqtest: " + data);
@@ -40,7 +44,8 @@ public class TestListener {
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue(),
             exchange = @Exchange(value = "amq.fanout", type = ExchangeTypes.FANOUT)), concurrency = "4")
-    public void onFanousRandomMessage(String data) {
-        System.out.println("onFanousRandomMessage: " + data + ":thread:" + Thread.currentThread().getName());
+    public void onFanousRandomMessage(String data, Channel channel) {
+        System.out.println(String.format("onFanousRandomMessage: %s, thread:%s, getFrom:%s port:%s",
+                data, Thread.currentThread().getName(), channel.getConnection().getAddress(), channel.getConnection().getPort()));
     }
 }
