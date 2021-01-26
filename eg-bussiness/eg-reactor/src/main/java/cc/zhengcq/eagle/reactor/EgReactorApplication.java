@@ -2,6 +2,7 @@ package cc.zhengcq.eagle.reactor;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -12,10 +13,10 @@ import org.springframework.context.annotation.ComponentScan;
  * @Date: 2021/1/22
  */
 @SpringBootApplication
-//@EnableEurekaClient
+@EnableDiscoveryClient
 //@EnableCircuitBreaker
 //@EnableFeignClients(basePackages = {"cc.zhengcq.eagle.pur"})
-//@ComponentScan({"cc.zhengcq.eagle"})
+@ComponentScan({"cc.zhengcq.eagle"})
 //@MapperScan(value = {"cc.zhengcq.eagle.pur"}, annotationClass = MyBatisDao.class)
 public class EgReactorApplication {
 

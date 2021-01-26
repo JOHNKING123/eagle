@@ -7,6 +7,7 @@ import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
@@ -26,6 +27,7 @@ import java.util.Map;
  * @Date: 2021/1/18
  */
 @Configuration
+@RefreshScope
 public class KafkaConfig {
     /**
      * 主题my-topic
@@ -58,11 +60,13 @@ public class KafkaConfig {
      */
     @Bean
     public NewTopic myTopic() {
+        System.out.println(myTopic);
         return new NewTopic(myTopic, 2, (short) 1);
     }
 
     @Bean
     public NewTopic myTopic2() {
+        System.out.println(myTopic2);
         return new NewTopic(myTopic2, 1, (short) 1);
     }
 

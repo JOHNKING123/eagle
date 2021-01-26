@@ -1,11 +1,11 @@
 spring:
   application:
-    name: eg-pur
+    name: eg-reactor
   cloud:
-    #    config:
-    #      uri: http://eg-config:8181
-    #      fail-fast: false
-    #      profile: ${config.profile:uat}
+#    config:
+#      uri: http://eg-config:8181
+#      fail-fast: false
+#      profile: ${config.profile:uat}
     nacos:
       discovery:
         server-addr: 192.168.253.3:8848
@@ -20,7 +20,7 @@ spring:
     active: ${config.profile:uat}
 
 server:
-  port: 8184
+  port: 8186
 
 management:
   endpoints:

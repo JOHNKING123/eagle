@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
  * @since     2019-07-14
  */
 @Data
-@ConfigurationProperties(prefix = "msyt.security.oauth2")
+@ConfigurationProperties(prefix = "eagle.security.oauth2")
 @Component
 public class OAuth2Properties {
 
