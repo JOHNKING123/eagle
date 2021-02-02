@@ -72,8 +72,8 @@ public class BaseVendorController extends BaseController implements IBaseVendorS
     public JsonResult<BaseVendor>  getById(@RequestParam("vendorId")Long vendorId) {
 
         BaseVendor baseVendor = baseVendorService.selectById(vendorId);
-        rabbitTemplate.convertAndSend("amq.fanout", "", "123123");
-        kafkaTemplate.send("my-topic", baseVendor);
+//        rabbitTemplate.convertAndSend("amq.fanout", "", "123123");
+        kafkaTemplate.send("queue.pretty.log.messages", "1234");
         return JsonResult.ok(baseVendor);
     }
 

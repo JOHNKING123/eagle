@@ -3,6 +3,7 @@ package cc.zhengcq.eagle.reactor.controller;
 import cc.zhengcq.eagle.core.mq.config.KafkaConfig;
 import cc.zhengcq.eagle.reactor.api.ICityService;
 import cc.zhengcq.eagle.reactor.model.City;
+import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -11,6 +12,11 @@ import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.time.LocalDateTime;
 
 /**
  * @ClassName: CityRestController
@@ -42,6 +48,9 @@ public class CityRestController {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
+    @Autowired
+    private RocketMQTemplate rocketMQTemplate;
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Mono<City> findOneCity(@PathVariable("id") Long id) {
         return Mono.create(cityMonoSink -> cityMonoSink.success(cityService.findCityById(id)));
@@ -58,6 +67,13 @@ public class CityRestController {
             });
             cityFluxSink.complete();
         });
+    }
+
+    @RequestMapping(value = "/testJump", method = RequestMethod.GET)
+    public Mono<String> testJump(HttpServletRequest req, HttpServletResponse res) {
+        LocalDateTime localDateTime = LocalDateTime.now();
+        this.rocketMQTemplate.convertAndSend("queue_log_messages", localDateTime.toString());
+        return Mono.create(monoSink -> monoSink.success(localDateTime.toString()));
     }
 
     @RequestMapping(method = RequestMethod.POST)

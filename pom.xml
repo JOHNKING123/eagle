@@ -17,6 +17,7 @@
         <module>eg-gateway</module>
         <module>eg-bussiness</module>
         <module>eg-uac</module>
+        <module>eg-stream</module>
     </modules>
 
 </project>
