@@ -20,7 +20,8 @@ public class CityService implements ICityService {
     @Override
     public List<City> findAllCity() {
         List<City> ls = new LinkedList<>();
-        IntStream.range(0, 10).forEach(num -> ls.add(new City("city" + num)));
+        IntStream.range(0, 10).forEach(num -> ls.add(new City("city" + num, "c")));
+
         return ls;
     }
 

@@ -11,6 +11,7 @@ HELP.md
 /log/
 /.idea/
 .idea/
+*.log
 
 *.DS_Store
 *.iml
